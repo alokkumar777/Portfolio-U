@@ -579,6 +579,7 @@ var contactForm = function () {
       },
       errorElement: "span",
       errorLabelContainer: ".form-error",
+
       /* submit via ajax */
       submitHandler: function (form) {
         var $submit = $(".submitting"),
@@ -586,31 +587,29 @@ var contactForm = function () {
 
         $.ajax({
           type: "POST",
-          url: "php/send-email.php",
+          url: "https://formspree.io/f/movkeyab", // your formspree endpoint
           data: $(form).serialize(),
+          dataType: "json", // important for formspree
 
           beforeSend: function () {
             $submit.css("display", "block").text(waitText);
           },
-          success: function (msg) {
-            if (msg == "OK") {
-              $("#form-message-warning").hide();
-              setTimeout(function () {
-                $("#contactForm").fadeOut();
-              }, 1000);
-              setTimeout(function () {
-                $("#form-message-success").fadeIn();
-              }, 1400);
-            } else {
-              $("#form-message-warning").html(msg);
-              $("#form-message-warning").fadeIn();
-              $submit.css("display", "none");
-            }
+          success: function () {
+            // ✅ Always success if 200 response
+            $("#form-message-warning").hide();
+            setTimeout(function () {
+              $("#contactForm").fadeOut();
+            }, 1000);
+            setTimeout(function () {
+              $("#form-message-success").fadeIn();
+            }, 1400);
           },
-          error: function () {
-            $("#form-message-warning").html(
-              "Something went wrong. Please try again."
-            );
+          error: function (xhr) {
+            let errorMsg = "Something went wrong. Please try again.";
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+              errorMsg = xhr.responseJSON.error;
+            }
+            $("#form-message-warning").html(errorMsg);
             $("#form-message-warning").fadeIn();
             $submit.css("display", "none");
           },
@@ -619,6 +618,7 @@ var contactForm = function () {
     });
   }
 };
+
 
 var stickyFillPlugin = function () {
   var elements = document.querySelectorAll(".unslate_co--sticky");
