@@ -27,12 +27,8 @@ Because you’re not basic. You want a portfolio that’s as bold as your ambiti
     ```bash
     git clone https://github.com/alokkumar777/Portfolio-U.git
     ```
-2. **Install dependencies** (if you're fancy):
-    ```bash
-    npm install
-    ```
-3. **Customize SCSS**: Open `scss/`, change what you want. Make it yours.
-4. **Build & Deploy**: Go static, go dynamic, do whatever — it’s your show.
+2. **Customize SCSS**: Open `scss/`, change what you want. Make it yours.
+3. **Build & Deploy**: Go static, go dynamic, do whatever — it’s your show.
 
 ## Show Off
 
